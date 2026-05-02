@@ -7,13 +7,8 @@ from psycopg2 import extras
 # =====================================================================
 # KONFIGURASI KONEKSI DATABASE POSTGRESQL (Hanya untuk Load ke DW)
 # =====================================================================
-DW_DB_CONFIG = {
-    "host": "localhost",
-    "database": "dws_enggang",
-    "user": "postgres",
-    "password": "",
-    "port": "5432"
-}
+from db_config import DW_DB_CONFIG
+
 
 API_URL = "https://api-enggang.vercel.app/api/deliveries"
 

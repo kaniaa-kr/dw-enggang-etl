@@ -7,21 +7,7 @@ from psycopg2 import extras
 # KONFIGURASI KONEKSI DATABASE POSTGRESQL
 # Sesuaikan dengan kredensial database PostgreSQL kampus
 # =====================================================================
-OLTP_DB_CONFIG = {
-    "host": "localhost",
-    "database": "oltp_enggang_khatulistiwa",
-    "user": "postgres",
-    "password": "",
-    "port": "5432"
-}
-
-DW_DB_CONFIG = {
-    "host": "localhost",
-    "database": "dws_enggang",
-    "user": "postgres",
-    "password": "",
-    "port": "5432"
-}
+from db_config import DW_DB_CONFIG, OLTP_DB_CONFIG
 
 
 @task(name="1. Extract (OLTP tb_products)", retries=2, retry_delay_seconds=5)

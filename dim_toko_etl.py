@@ -9,12 +9,14 @@ import psycopg2
 from psycopg2.extras import execute_values
 from prefect import task, flow
 
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DW_NAME = "dws_enggang"
-OLTP_NAME = "oltp_enggang_khatulistiwa"
-DB_USER = "postgres"
-DB_PASS = ""
+from db_config import DW_DB_CONFIG, OLTP_DB_CONFIG
+
+DB_HOST = DW_DB_CONFIG["host"]
+DB_PORT = DW_DB_CONFIG["port"]
+DW_NAME = DW_DB_CONFIG["database"]
+OLTP_NAME = OLTP_DB_CONFIG["database"]
+DB_USER = DW_DB_CONFIG["user"]
+DB_PASS = DW_DB_CONFIG["password"]
 
 def get_dw_connection():
     return psycopg2.connect(

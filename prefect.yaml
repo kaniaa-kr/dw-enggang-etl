@@ -18,25 +18,25 @@ push: null
 # pull section allows you to provide instructions for cloning
 # this project in remote locations
 pull:
-- prefect.deployments.steps.git_clone:
-    repository: git@github.com:abumaryam/dw_anggang_etl.git
-    branch: main
+  - prefect.deployments.steps.git_clone:
+      repository: git@github.com:kaniaa-kr/dw-enggang-etl.git
+      branch: main
 
 # the deployments section allows you to provide configuration
 # for deploying flows
 deployments:
-- name: Deploy-ETL-Harian
-  version: null
-  tags: []
-  concurrency_limit: null
-  description: Contoh flow untuk materi kuliah SI
-  entrypoint: pipeline.py:etl_flow
-  parameters: {}
-  work_pool:
-    name: pool-kampus
-    work_queue_name: null
-    job_variables: {}
-  schedules:
-  - cron: 0 7 * * *
-    timezone: null
-    day_or: true
+  - name: Deploy-ETL-Harian
+    version: null
+    tags: []
+    concurrency_limit: null
+    description: Contoh flow untuk materi kuliah SI
+    entrypoint: pipeline.py:main_dw_flow
+    parameters: {}
+    work_pool:
+      name: pool-kampus
+      work_queue_name: null
+      job_variables: {}
+    schedules:
+      - cron: 59 23 * * *
+        timezone: null
+        day_or: true

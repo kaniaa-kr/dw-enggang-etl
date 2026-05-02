@@ -8,13 +8,7 @@ import os
 # =====================================================================
 # KONFIGURASI KONEKSI DATABASE & FILE
 # =====================================================================
-DW_DB_CONFIG = {
-    "host": "localhost",
-    "database": "dws_enggang",
-    "user": "postgres",
-    "password": "",
-    "port": "5432"
-}
+from db_config import DW_DB_CONFIG
 
 # Path ke file CSV sumber
 CSV_FILE_PATH = "Target_Sales_2024.csv"

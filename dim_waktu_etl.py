@@ -11,11 +11,13 @@ from prefect import task, flow
 from datetime import datetime
 
 
-DB_HOST = "localhost"
-DB_PORT = "5432"
-DB_NAME = "dws_enggang"
-DB_USER = "postgres"
-DB_PASS = ""
+from db_config import DW_DB_CONFIG
+
+DB_HOST = DW_DB_CONFIG["host"]
+DB_PORT = DW_DB_CONFIG["port"]
+DB_NAME = DW_DB_CONFIG["database"]
+DB_USER = DW_DB_CONFIG["user"]
+DB_PASS = DW_DB_CONFIG["password"]
 
 @task(name="Extract/Generate Date Range", retries=2)
 def generate_date_range(start_date: str, end_date: str) -> pd.DataFrame:

@@ -1,29 +1,30 @@
-# File: pipeline.py
-from prefect import flow, task
+from prefect import flow
 
-# 1. Definisikan Task dengan decorator @task
-@task(name="Ambil Data Mentah", retries=2, retry_delay_seconds=5)
-def extract_data():
-    print("Mengambil data dari sumber...")
-    return [1, 2, 3, 4, 5]
+# 1. Import semua fungsi flow dimensi
+from dim_kurir_etl import run_kurir_etl
+from dim_pelanggan_etl import run_pelanggan_etl
+from dim_produk_etl import run_produk_etl
+from dim_toko_etl import run_toko_etl
+from dim_waktu_etl import run_waktu_etl
 
-@task(name="Transformasi Data")
-def transform_data(data):
-    print("Memproses data...")
-    return [x * 10 for x in data]
+# 2. Import semua fungsi flow fact
+from fact_sales_etl import run_sales_etl
+from fact_delivery_etl import run_delivery_etl
+from fact_target_sales_etl import run_target_sales_etl # Ini yang tertinggal sebelumnya
 
-@task(name="Simpan Data")
-def load_data(data):
-    print(f"Menyimpan data ke database: {data}")
+@flow(name="Main ETL Anggang", description="Orchestrator untuk seluruh pipeline DW")
+def main_dw_flow():
+    # FASE 1: Eksekusi Dimensi Terlebih Dahulu
+    run_kurir_etl()
+    run_pelanggan_etl()
+    run_produk_etl()
+    run_toko_etl()
+    run_waktu_etl()
 
-# 2. Definisikan Flow dengan decorator @flow
-@flow(name="Pipeline ETL Sederhana", description="Contoh flow untuk materi kuliah SI")
-def etl_flow():
-    # Rangkai task di dalam flow
-    data_mentah = extract_data()
-    data_bersih = transform_data(data_mentah)
-    load_data(data_bersih)
+    # FASE 2: Eksekusi Fact Setelah Semua Dimensi Selesai
+    run_sales_etl()
+    run_delivery_etl()
+    run_target_sales_etl()
 
-# 3. Jalankan flow
 if __name__ == "__main__":
-    etl_flow()
+    main_dw_flow()
