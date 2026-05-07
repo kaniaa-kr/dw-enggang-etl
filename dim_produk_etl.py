@@ -112,7 +112,7 @@ def etl_dim_produk_flow():
     # Eksekusi berurutan (Bisa dipantau di UI Prefect)
     df_mentah = extract_tb_products()
     df_bersih = transform_dim_produk(df_mentah)
-    load_dim_produk(df_bersih)
+    _ = load_dim_produk(df_bersih)
 
 
 if __name__ == "__main__":

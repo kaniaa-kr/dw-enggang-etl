@@ -116,7 +116,7 @@ def flow_etl_dim_waktu():
     df_transformed = transform_dim_waktu(df_raw)
     
     # 3. Load
-    load_to_postgres(df_transformed)
+    _ = load_to_postgres(df_transformed)
 
 if __name__ == "__main__":
     # Menjalankan flow secara lokal

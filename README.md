@@ -42,9 +42,10 @@ DB_USER=postgres
 DB_PASSWORD=masukkan_password_postgres_kamu_di_sini
 DB_PORT=5432
 ```
-3. Pastikan juga kamu memiliki file bernama `.gitignore` yang memuat teks `.env` di dalamnya. Hal ini akan memproteksi file `.env` agar tidak ikut terkirim ketika kita mengetik `git add` dan `git push`.
+3. Pastikan juga kamu memiliki file bernama `.gitignore` yang memuat teks `.env` di dalamnya. Hal ini akan memproteksi file `.env` agar tidak ter-push ke GitHub.
+4. Sebagai panduan bagi rekan tim, gunakan file `.env.example` yang sudah disediakan sebagai *template* (hanya berisi key tanpa nilai sensitif).
 
-*(Note: File `.py` di dalam repository ini sudah disesuaikan agar bisa membaca nilai dari file `.env`.)*
+*(Note: File `db_config.py` dan file lainnya di repositori ini sudah disesuaikan agar membaca nilai dari `.env` secara aman, tanpa ada kredensial yang di-hardcode.)*
 
 ---
 
@@ -75,7 +76,20 @@ Sesuai arahan tugas untuk men-deploy pipeline dan menjadwalkan agar berjalan oto
    ```
    Lalu buka web Anda di `http://127.0.0.1:4200/`. Pergi ke tab **Deployments** dan Anda akan melihat bahwa `Deploy-ETL-Harian` sudah siap dan terjadwal pukul `23:59`. Anda dapat me-*screenshot* halaman ini!
 4. **Nyalakan Worker (Agar jadwal tersebut benar-benar tereksekusi):**
-   Buka 1 tab terminal baru, aktifkan environment `source .venv/bin/activate`, dan jalankan:
+   Buka 1 tab terminal baru, aktifkan environment (`source .venv/bin/activate`).
+   
+   **PENTING (Troubleshooting):** Jika muncul error `ValueError: PREFECT_API_URL must be set to start a Worker.`, terminal kamu belum tersambung ke server Prefect lokal. Jalankan konfigurasi ini dulu:
+   ```bash
+   prefect config set PREFECT_API_URL="http://127.0.0.1:4200/api"
+   ```
+   
+   Setelah itu, jalankan perintah worker:
    ```bash
    prefect worker start --pool "pool-kampus"
    ```
+
+---
+
+## 6. Catatan Penting & Troubleshooting 🛠️
+- **Warning Pylance "Result of async function call is unused":** Jika IDE (seperti VS Code) memunculkan warning ini di tugas Prefect, ini hanyalah *false positive*. Pada *source code*, pemanggilan fungsi yang tidak disimpan ke variabel telah ditambahkan `_ = nama_fungsi()` untuk menghilangkan warning.
+- **Import Error di `pipeline.py`:** Jika mengalami error fungsi tidak ditemukan, pastikan nama fungsi yang di-import di `pipeline.py` benar-benar sama persis dengan nama fungsi `@flow` di file ETL aslinya (contoh: `etl_dim_kurir_flow`). Hal ini sudah diperbaiki di repositori ini.

@@ -114,7 +114,7 @@ def etl_dim_pelanggan_flow():
     # Eksekusi berurutan (Bisa dipantau di UI Prefect nanti)
     df_mentah = extract_tb_customers()
     df_bersih = transform_dim_pelanggan(df_mentah)
-    load_dim_pelanggan(df_bersih)
+    _ = load_dim_pelanggan(df_bersih)
 
 
 if __name__ == "__main__":

@@ -162,7 +162,7 @@ def etl_fact_delivery_flow():
     df_fakta = transform_fact_delivery(df_api, df_oltp_headers, dim_lookups)
     
     # 3. Load ke DW
-    load_fact_delivery(df_fakta)
+    _ = load_fact_delivery(df_fakta)
 
 
 if __name__ == "__main__":

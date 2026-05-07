@@ -107,7 +107,7 @@ def etl_dim_kurir_flow():
     
     df_mentah = extract_api_deliveries()
     df_bersih = transform_dim_kurir(df_mentah)
-    load_dim_kurir(df_bersih)
+    _ = load_dim_kurir(df_bersih)
 
 
 if __name__ == "__main__":

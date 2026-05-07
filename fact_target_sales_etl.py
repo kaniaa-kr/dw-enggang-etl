@@ -126,7 +126,7 @@ def etl_fact_target_sales_flow():
     df_fakta = transform_fact_target_sales(df_csv, df_toko)
     
     # 4. Simpan ke Data Warehouse
-    load_fact_target_sales(df_fakta)
+    _ = load_fact_target_sales(df_fakta)
 
 
 if __name__ == "__main__":

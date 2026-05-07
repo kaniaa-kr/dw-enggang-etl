@@ -165,7 +165,7 @@ def etl_fact_sales_flow():
     df_fakta = transform_fact_sales(df_transaksi, dim_lookups)
     
     # 4. Masukkan ke tujuan akhir
-    load_fact_sales(df_fakta)
+    _ = load_fact_sales(df_fakta)
 
 
 if __name__ == "__main__":

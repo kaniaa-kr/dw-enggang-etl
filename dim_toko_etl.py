@@ -133,7 +133,7 @@ def flow_etl_dim_toko():
     df_ready_to_load = transform_dim_toko(df_oltp, df_dwh)
     
     # 3. Load
-    load_dim_toko(df_ready_to_load)
+    _ = load_dim_toko(df_ready_to_load)
 
 if __name__ == "__main__":
     flow_etl_dim_toko()
